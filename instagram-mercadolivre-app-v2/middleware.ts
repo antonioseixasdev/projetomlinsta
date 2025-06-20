@@ -2,7 +2,8 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 export function middleware(request: NextRequest) {
-  const isLoggedInCookie = request.cookies.get('isLoggedIn');
+  // Use .value para acessar o valor do cookie no Edge Runtime
+  const isLoggedInCookie = request.cookies.get('isLoggedIn')?.value;
   const { pathname } = request.nextUrl;
 
   const protectedRoutes = ['/perfil', '/dashboard'];
@@ -12,13 +13,16 @@ export function middleware(request: NextRequest) {
   const isAccessingAuthRoute = authRoutes.some(route => pathname.startsWith(route));
 
   if (isAccessingProtectedRoute && !isLoggedInCookie) {
-    const loginUrl = new URL('/login', request.url);
+    const loginUrl = request.nextUrl.clone();
+    loginUrl.pathname = '/login';
     loginUrl.searchParams.set('redirectedFrom', pathname);
     return NextResponse.redirect(loginUrl);
   }
 
   if (isAccessingAuthRoute && isLoggedInCookie) {
-    return NextResponse.redirect(new URL('/dashboard', request.url));
+    const dashboardUrl = request.nextUrl.clone();
+    dashboardUrl.pathname = '/dashboard';
+    return NextResponse.redirect(dashboardUrl);
   }
 
   return NextResponse.next();
