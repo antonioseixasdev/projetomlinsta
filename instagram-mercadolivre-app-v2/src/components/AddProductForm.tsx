@@ -3,7 +3,6 @@ import { addProduct } from "@/services/addProductService";
 import { useAuth } from "@/context/AuthContext";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
-import { Modal } from "@/components/ui/Modal";
 
 const AddProductForm = ({ onProductAdded, initialData, onCancel, onEdit }: {
   onProductAdded: () => void;
@@ -32,7 +31,7 @@ const AddProductForm = ({ onProductAdded, initialData, onCancel, onEdit }: {
       setDescription("");
       onProductAdded();
       if (onCancel) onCancel();
-    } catch (err) {
+    } catch {
       setError("Erro ao salvar produto.");
     } finally {
       setLoading(false);
