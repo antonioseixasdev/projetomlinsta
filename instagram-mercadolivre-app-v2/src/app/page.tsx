@@ -42,7 +42,6 @@ export default function Home() {
 
   useEffect(() => {
     try {
-      // @ts-expect-error: firebase_app is JS default export, trust its type
       const auth = getAuth(firebase_app);
       console.log("Firebase Auth object:", auth);
     } catch (e) {
