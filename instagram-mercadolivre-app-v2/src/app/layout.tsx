@@ -6,9 +6,6 @@ import ThemeSwitcher from "@/components/ThemeSwitcher";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { AuthProvider } from '@/context/AuthContext';
-import ProductsList from "@/components/ProductsList";
-import AddProductForm from "@/components/AddProductForm";
-import { useState } from "react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,8 +27,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const [refresh, setRefresh] = useState(0);
-
   return (
     <html lang="pt-BR">
       <body
@@ -44,11 +39,6 @@ export default function RootLayout({
           <Header />
           <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 min-h-[calc(100vh-8rem)]">
             {children}
-            <section className="mt-8">
-              <h2 className="text-xl font-bold mb-4">Seus Produtos</h2>
-              <AddProductForm onProductAdded={() => setRefresh(r => r + 1)} />
-              <ProductsList key={refresh} />
-            </section>
           </main>
           <Footer />
         </AuthProvider>
