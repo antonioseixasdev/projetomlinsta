@@ -10,10 +10,10 @@ interface ToastProps {
 }
 
 const toastColors = {
-  success: "bg-green-500 text-white dark:bg-green-600",
-  error: "bg-red-500 text-white dark:bg-red-600",
-  info: "bg-blue-500 text-white dark:bg-blue-600",
-  warning: "bg-yellow-500 text-black dark:bg-yellow-400 dark:text-black",
+  success: "alert-success",
+  error: "alert-error",
+  info: "alert-info",
+  warning: "alert-warning",
 };
 
 const Toast = ({ message, type = "info", duration = 3000, onClose }: ToastProps) => {
@@ -24,10 +24,10 @@ const Toast = ({ message, type = "info", duration = 3000, onClose }: ToastProps)
 
   return (
     <div
-      className={`fixed top-6 right-6 z-50 px-4 py-2 rounded shadow-lg ${toastColors[type]} animate-fade-in`}
+      className={`alert ${toastColors[type]} fixed top-6 right-6 z-50 shadow-lg animate-fade-in`}
       role="alert"
     >
-      {message}
+      <span>{message}</span>
     </div>
   );
 };
