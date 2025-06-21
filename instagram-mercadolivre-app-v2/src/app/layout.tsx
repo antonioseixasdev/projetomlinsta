@@ -1,26 +1,8 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import "@/lib/firebaseConfig";
-import ThemeSwitcher from "@/components/ThemeSwitcher";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
 import { AuthProvider } from '@/context/AuthContext';
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-export const metadata: Metadata = {
-  title: "MLInsta App",
-  description: "Sua plataforma de integração Instagram e Mercado Livre",
-};
+import ThemeSwitcher from '@/components/ThemeSwitcher';
+import Header from '@/components/layout/Header';
+import Footer from '@/components/layout/Footer';
 
 export default function RootLayout({
   children,
@@ -29,9 +11,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-nude-light text-texto-base-light dark:bg-cinza-fundo-dark dark:text-texto-base-dark transition-colors duration-300`}
-      >
+      <body className="antialiased bg-nude-light text-texto-base-light dark:bg-cinza-fundo-dark dark:text-texto-base-dark transition-colors duration-300">
         <AuthProvider>
           <div className="fixed top-4 right-4 z-50">
             <ThemeSwitcher />

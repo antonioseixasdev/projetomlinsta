@@ -1,89 +1,43 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
-import ThemeSwitcher from "@/components/ThemeSwitcher";
-import AuthControls from "@/components/AuthControls";
+import Image from "next/image";
 import { useAuth } from '@/context/AuthContext';
+import AuthControls from '@/components/AuthControls';
+import ThemeSwitcher from '@/components/ThemeSwitcher';
 
-const MenuIcon = () => (
-  <svg className="h-6 w-6 fill-current" viewBox="0 0 24 24">
-    <path fillRule="evenodd" d="M4 5h16a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2z" />
-  </svg>
-);
-
-const CloseIcon = () => (
-  <svg className="h-6 w-6 fill-current" viewBox="0 0 24 24">
-    <path fillRule="evenodd" clipRule="evenodd" d="M18.278 16.864a1 1 0 0 1-1.414 1.414l-4.829-4.828-4.828 4.828a1 1 0 0 1-1.414-1.414l4.828-4.829-4.828-4.828a1 1 0 0 1 1.414-1.414l4.829 4.828 4.828-4.828a1 1 0 1 1 1.414 1.414l-4.828 4.829 4.828 4.828z" />
-  </svg>
-);
-
-const Header = () => {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+export default function Header() {
   const { user } = useAuth();
 
-  const navLinks = [
-    { href: "/dashboard", label: "Dashboard" },
-    { href: "/products", label: "Produtos" },
-    { href: "/settings", label: "Configurações" },
-  ];
-
   return (
-    <header className="navbar bg-base-100 shadow-md sticky top-0 z-50 transition-colors duration-300">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-3">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <div className="flex-shrink-0">
-            <Link href="/" className="text-2xl font-bold text-base-content">
-              MLInsta
-            </Link>
-          </div>
-          {/* Navegação Desktop */}
-          <nav className="hidden md:flex gap-6 items-center">
-            {navLinks.map((link) => (
-              <Link key={link.href} href={link.href} className="btn btn-ghost btn-sm">
-                {link.label}
-              </Link>
-            ))}
-            {user && (
-              <Link href="/perfil" className="btn btn-ghost btn-sm">
-                Perfil
-              </Link>
-            )}
-            <ThemeSwitcher />
-            <AuthControls />
-          </nav>
-          {/* Botão do Menu Mobile */}
-          <div className="md:hidden flex items-center">
-            <button
-              className="btn btn-ghost btn-circle"
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              aria-label="Abrir menu"
-            >
-              {isMobileMenuOpen ? <CloseIcon /> : <MenuIcon />}
-            </button>
-          </div>
+    <header className="sticky top-0 z-50 bg-base-100 shadow-md">
+      <nav className="container mx-auto flex items-center justify-between h-20 px-4">
+        {/* Logo */}
+        <Link href="/" className="flex items-center gap-2">
+          <Image
+            src="/file.svg"
+            alt="Logo"
+            width={40}
+            height={40}
+            className="dark:hidden"
+          />
+          <Image
+            src="/globe.svg"
+            alt="Logo dark"
+            width={40}
+            height={40}
+            className="hidden dark:block"
+          />
+          <span className="ml-2 text-xl font-bold text-base-content">MLInsta</span>
+        </Link>
+        {/* Navegação principal */}
+        <div className="flex items-center gap-4">
+          <Link href="/dashboard" className="hover:underline text-base-content">Dashboard</Link>
+          <Link href="/perfil" className="hover:underline text-base-content">Perfil</Link>
+          <ThemeSwitcher />
+          <AuthControls />
         </div>
-        {/* Menu Mobile */}
-        {isMobileMenuOpen && (
-          <nav className="md:hidden mt-2 flex flex-col gap-2 bg-base-100 rounded-box shadow p-4">
-            {navLinks.map((link) => (
-              <Link key={link.href} href={link.href} className="btn btn-ghost btn-block" onClick={() => setIsMobileMenuOpen(false)}>
-                {link.label}
-              </Link>
-            ))}
-            {user && (
-              <Link href="/perfil" className="btn btn-ghost btn-block" onClick={() => setIsMobileMenuOpen(false)}>
-                Perfil
-              </Link>
-            )}
-            <ThemeSwitcher />
-            <AuthControls />
-          </nav>
-        )}
-      </div>
+      </nav>
     </header>
   );
-};
-
-export default Header;
+}

@@ -16,24 +16,34 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     ref
   ) => {
     return (
-      <div className="form-control w-full">
+      <div className="w-full">
         {label && (
-          <label className="label">
-            <span className="label-text dark:text-texto-base-dark">{label}</span>
+          <label className="block mb-1 text-sm font-medium text-texto-base-light dark:text-texto-base-dark">
+            {label}
           </label>
         )}
-        <div className="relative">
-          {iconLeft && <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-300">{iconLeft}</span>}
+        <div
+          className={`flex items-center rounded-md border bg-white dark:bg-cinza-elemento-dark border-gray-300 dark:border-cinza-elemento-dark focus-within:ring-2 focus-within:ring-areia-light dark:focus-within:ring-areia-dark transition ${error ? 'border-red-500 ring-red-500' : ''} ${className}`}
+        >
+          {iconLeft && (
+            <span className="pl-3 text-gray-400 dark:text-gray-300 flex items-center">
+              {iconLeft}
+            </span>
+          )}
           <input
             ref={ref}
-            className={`input input-bordered w-full ${iconLeft ? 'pl-10' : ''} ${iconRight ? 'pr-10' : ''} ${error ? 'input-error' : ''} ${className}`.trim()}
+            className={`flex-1 bg-transparent outline-none px-3 py-2 text-texto-base-light dark:text-texto-base-dark placeholder-gray-400 dark:placeholder-gray-500 ${iconLeft ? 'pl-1' : ''} ${iconRight ? 'pr-1' : ''}`}
             {...props}
           />
-          {iconRight && <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-300">{iconRight}</span>}
+          {iconRight && (
+            <span className="pr-3 text-gray-400 dark:text-gray-300 flex items-center">
+              {iconRight}
+            </span>
+          )}
         </div>
-        {error && <label className="label">
-          <span className="label-text-alt text-error">{error}</span>
-        </label>}
+        {error && (
+          <p className="mt-1 text-xs text-red-500">{error}</p>
+        )}
       </div>
     );
   }

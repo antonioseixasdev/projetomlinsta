@@ -14,18 +14,22 @@ interface ModalProps {
 const Modal = ({ isOpen, onClose, title, children, className = "" }: ModalProps) => {
   if (!isOpen) return null;
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
-      <div className={`modal-box relative ${className}`}>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm animate-fade-in">
+      <div
+        className={`bg-white dark:bg-cinza-elemento-dark rounded-xl shadow-2xl max-w-lg w-full p-6 relative transition-colors ${className}`}
+        role="dialog"
+        aria-modal="true"
+      >
         <button
           onClick={onClose}
-          className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+          className="absolute top-3 right-3 text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 focus:outline-none transition-transform duration-150 hover:rotate-90"
           aria-label="Fechar modal"
         >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
-        {title && <h3 className="font-bold text-lg mb-4">{title}</h3>}
+        {title && <h3 className="text-xl font-bold mb-4 text-texto-base-light dark:text-texto-base-dark">{title}</h3>}
         {children}
       </div>
     </div>

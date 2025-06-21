@@ -1,75 +1,39 @@
 "use client";
 
-import React, { ReactNode } from "react";
+import React from "react";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  children: ReactNode;
-  variant?: "primary" | "secondary" | "outline" | "ghost" | "link";
-  size?: "sm" | "md" | "lg";
+  children: React.ReactNode;
+  iconLeft?: React.ReactNode;
+  iconRight?: React.ReactNode;
   isLoading?: boolean;
-  iconLeft?: ReactNode;
-  iconRight?: ReactNode;
+  className?: string;
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (
     {
       children,
-      variant = "primary",
-      size = "md",
-      isLoading = false,
       iconLeft,
       iconRight,
+      isLoading = false,
       className = "",
       disabled,
       ...props
     },
     ref
   ) => {
-    // Mapear variantes e tamanhos para classes daisyUI
-    let daisyVariant = "btn-primary";
-    switch (variant) {
-      case "secondary":
-        daisyVariant = "btn-secondary";
-        break;
-      case "outline":
-        daisyVariant = "btn-outline";
-        break;
-      case "ghost":
-        daisyVariant = "btn-ghost";
-        break;
-      case "link":
-        daisyVariant = "btn-link";
-        break;
-      default:
-        daisyVariant = "btn-primary";
-    }
-
-    let daisySize = "";
-    switch (size) {
-      case "sm":
-        daisySize = "btn-sm";
-        break;
-      case "lg":
-        daisySize = "btn-lg";
-        break;
-      default:
-        daisySize = "btn-md";
-    }
-
-    const disabledStyle = disabled || isLoading ? "opacity-50 cursor-not-allowed" : "";
-
     return (
       <button
         ref={ref}
-        className={`btn ${daisyVariant} ${daisySize} ${disabledStyle} ${className}`.trim()}
+        className={`inline-flex items-center gap-2 px-6 py-2 rounded-lg font-semibold bg-primary text-white hover:bg-primary/90 transition disabled:opacity-50 disabled:cursor-not-allowed ${className}`.trim()}
         disabled={disabled || isLoading}
         aria-disabled={disabled || isLoading}
         type={props.type || "button"}
         {...props}
       >
         {isLoading && (
-          <span className="loading loading-spinner mr-2"></span>
+          <span className="animate-spin mr-2 h-5 w-5 border-2 border-white border-t-transparent rounded-full"></span>
         )}
         {!isLoading && iconLeft && <span className="mr-2">{iconLeft}</span>}
         {children}

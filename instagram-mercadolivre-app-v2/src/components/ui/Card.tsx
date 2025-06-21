@@ -19,11 +19,17 @@ const Card = ({
 }: CardProps) => {
   return (
     <div
-      className={`card bg-base-100 ${
-        shadow ? "shadow-xl" : ""
-      } ${rounded ? "rounded-lg" : ""} ${border ? "border" : ""} p-6 transition-colors ${className}`.trim()}
+      className={`
+        bg-white dark:bg-cinza-elemento-dark
+        ${shadow ? "shadow-md dark:shadow-lg" : ""}
+        ${rounded ? "rounded-lg" : ""}
+        ${border ? "border border-gray-200 dark:border-cinza-fundo-dark" : ""}
+        p-6
+        transition-colors
+        ${className}
+      `}
     >
-      <div className="card-body p-0">{children}</div>
+      {children}
     </div>
   );
 };
