@@ -8,7 +8,24 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   iconRight?: React.ReactNode;
   isLoading?: boolean;
   className?: string;
+  variant?: "primary" | "secondary" | "outline" | "ghost";
+  size?: "sm" | "md" | "lg";
 }
+
+const variantClasses = {
+  primary: "bg-areia-light text-white hover:bg-areia-dark",
+  secondary:
+    "bg-nude-dark text-cinza-fundo-dark hover:bg-areia-light hover:text-white",
+  outline:
+    "bg-transparent border border-areia-light text-areia-light hover:bg-areia-light hover:text-white",
+  ghost: "bg-transparent text-areia-light hover:bg-areia-light hover:text-white",
+};
+
+const sizeClasses = {
+  sm: "px-3 py-1 text-sm",
+  md: "px-6 py-2 text-base",
+  lg: "px-8 py-3 text-lg",
+};
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (
@@ -19,6 +36,8 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       isLoading = false,
       className = "",
       disabled,
+      variant = "primary",
+      size = "md",
       ...props
     },
     ref
@@ -26,7 +45,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     return (
       <button
         ref={ref}
-        className={`inline-flex items-center gap-2 px-6 py-2 rounded-lg font-semibold bg-primary text-white hover:bg-primary/90 transition disabled:opacity-50 disabled:cursor-not-allowed ${className}`.trim()}
+        className={`inline-flex items-center gap-2 rounded-lg font-semibold transition disabled:opacity-50 disabled:cursor-not-allowed ${variantClasses[variant]} ${sizeClasses[size]} ${className}`.trim()}
         disabled={disabled || isLoading}
         aria-disabled={disabled || isLoading}
         type={props.type || "button"}
