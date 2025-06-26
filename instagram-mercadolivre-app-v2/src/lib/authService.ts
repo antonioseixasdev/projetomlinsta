@@ -4,6 +4,7 @@ import {
   GoogleAuthProvider,
   FacebookAuthProvider,
   signInWithPopup,
+  signInWithEmailAndPassword, // ADICIONADO
   signOut as firebaseSignOut,
   User
 } from 'firebase/auth';
@@ -48,6 +49,20 @@ export const signInWithFacebook = async (): Promise<User | null> => {
     return result.user;
   } catch (error: any) {
     console.error("Erro Facebook Sign-In:", error.message);
+    return null;
+  }
+};
+
+// NOVA FUNÇÃO: Login com e-mail e senha
+export const signInWithEmail = async (email: string, password: string): Promise<User | null> => {
+  try {
+    const result = await signInWithEmailAndPassword(auth, email, password);
+    if (result.user) {
+      setLoginCookie();
+    }
+    return result.user;
+  } catch (error: any) {
+    console.error("Erro ao fazer login com e-mail:", error.message);
     return null;
   }
 };

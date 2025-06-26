@@ -12,6 +12,7 @@ export default function Login() {
     e.preventDefault()
 
     const user = await signInWithEmail(email, senha)
+    console.log('Usuário retornado pelo Firebase:', user)
     if (user) {
       router.push('/dashboard')
     } else {
